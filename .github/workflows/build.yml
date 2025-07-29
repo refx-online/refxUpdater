@@ -15,10 +15,6 @@ jobs:
 
       - name: Install Nuget packages
         run: nuget restore refx-updater.sln
-
-      - name: Install ILMerge
-        run: |
-          nuget install ILMerge -Version 3.0.41 -OutputDirectory packages
           
       - name: Setup msbuild
         uses: microsoft/setup-msbuild@v2
