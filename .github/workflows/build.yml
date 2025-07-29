@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.2.2
+
+      - name: Install Nuget packages
+        run: nuget restore refx-updater.sln
+
+      - name: Install ILMerge
+        run: |
+          nuget install ILMerge -Version 3.0.41 -OutputDirectory packages
+
+      - name: Build
+        run: msbuild refx-updater.sln /p:Configuration=Release /p:Platform="Any CPU"
+
+      - name: Upload
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: refx-updater
+          path: refx-updater/bin/Release/*.exe
