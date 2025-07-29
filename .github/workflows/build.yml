@@ -19,6 +19,11 @@ jobs:
       - name: Install ILMerge
         run: |
           nuget install ILMerge -Version 3.0.41 -OutputDirectory packages
+          
+      - name: Setup msbuild
+        uses: microsoft/setup-msbuild@v2
+        with:
+          vs-version: 'latest'
 
       - name: Build
         run: msbuild refx-updater.sln /p:Configuration=Release /p:Platform="Any CPU"
