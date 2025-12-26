@@ -2,6 +2,6 @@
 {
     public static class Url
     {
-        public static readonly string MetadataUrl = "https://updater.remeliah.cyou/metadata.json";
+        public static readonly string MetadataUrl = "https://updater.refx.online/metadata.json";
     }
 }
