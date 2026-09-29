@@ -27,3 +27,16 @@ jobs:
         with:
           name: refx-updater
           path: refx-updater/bin/Release/
+
+      # push straight to the updater so players always fetch this build.
+      # needs repo secrets: UPDATER_BASE_URL, UPDATER_UPLOAD_TOKEN.
+      - name: publish to updater
+        if: github.ref == 'refs/heads/041095'
+        shell: bash
+        env:
+          UPDATER_BASE_URL: ${{ secrets.UPDATER_BASE_URL }}
+          UPLOAD_TOKEN: ${{ secrets.UPDATER_UPLOAD_TOKEN }}
+        run: >
+          curl -sf -m 120 -X POST -H "Authorization: Bearer $UPLOAD_TOKEN"
+          --data-binary "@refx-updater/bin/Release/refxUpdater.exe"
+          "$UPDATER_BASE_URL/resources/client/refxUpdater.exe"
